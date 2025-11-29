@@ -43,26 +43,41 @@
  * SPDX-License-Identifier: Apache-2.0
  */
  
-.code32                             /* Generate 32 bits instructions */
+/**
+ * @brief Generate 32 bits instructions.
+ */
+.code32
 
+/**
+ * @brief Start function.
+ * This is the start symbol of any program.
+ */
 .global _start
-
 .section .text, "ax"
 .type _start, @function
 _start:
-    xorl  %ebp, %ebp                /* Clears EBP register */
-    movl  %esp, %eax                /* Pass pointer to argc */
-    andl  $-16, %esp                /* Align to 16 byte */
-    pushl %eax                      /* Push EAX */
-    pushl %eax                      /* Push EAX */
+    /* Clears EBP register */
+    xorl  %ebp, %ebp
+    /* Pass pointer to argc */
+    movl  %esp, %eax
+    /* Align to 16 byte */
+    andl  $-16, %esp
+    /* Push EAX */
+    pushl %eax
+    pushl %eax
 
 .weak   _DYNAMIC
 .hidden _DYNAMIC
-    call 1f                         /* Call forward label */
+    /* Call forward label */
+    call 1f
 
 1:
-    addl  $_DYNAMIC - 1b, (%esp)    /* ESP = &_DYNAMIC */
-    pushl %eax                      /* Push EAX */
-    call  __start_c                 /* Call main __start_c function */
-    hlt                             /* Halt if somehow __start_c returns */
+    /* ESP = &_DYNAMIC */
+    addl  $_DYNAMIC - 1b, (%esp)
+    /* Push EAX */
+    pushl %eax
+    /* Call main __start_c function */
+    call  __start_c
+    /* Halt if somehow __start_c returns */
+    hlt
 
