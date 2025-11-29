@@ -66,6 +66,9 @@ _start:
     pushl %eax
     pushl %eax
 
+/**
+ * @brief Weak and hidden _DYNAMIC label for PIC.
+ */
 .weak   _DYNAMIC
 .hidden _DYNAMIC
     /* Call forward label */
