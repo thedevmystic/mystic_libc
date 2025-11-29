@@ -19,7 +19,7 @@
  * @brief Initialization start of C Runtime Routine.
  *
  * @details
- * This header file contains _init, and _fini sections of a C program.
+ * This header file contains _init, and _fini start sections of a C program.
  * It provides essential initialization startup routine of the core
  * C Runtime Routine.
  *
