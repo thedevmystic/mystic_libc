@@ -44,7 +44,7 @@
 .code32
 
 /**
- * @brief Prologue initialization section for constructors.
+ * @brief Prologue section of _init.
  */
 .global _init
 .section .init, "ax"
@@ -57,7 +57,7 @@ _init:
     movl  %esp, %ebp
 
 /**
- * @brief Prologue initialization section for destructors.
+ * @brief Prologue section of _fini.
  */
 .global _fini
 .section .fini, "ax"

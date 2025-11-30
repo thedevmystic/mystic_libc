@@ -53,7 +53,9 @@
     /* Return */
     ret
 
-/* Epilouge section of _fini */
+/**
+ * @brief Epilouge section of _fini.
+ */
 .section .fini
     /* Pop EBP register */
     popl %ebp
