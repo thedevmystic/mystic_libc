@@ -53,7 +53,7 @@
  */
 .global _init
 .section .init, "ax"
-.type _init, @function
+.type _init, %function
 .align 2
 _init:
     /* Save frame pointer and return address */
@@ -66,7 +66,7 @@ _init:
  */
 .global _fini
 .section .fini, "ax"
-.type _fini, @function
+.type _fini, %function
 .align 2
 _fini:
     /* Save frame pointer and return address */

@@ -60,7 +60,7 @@
  */
 .global _start
 .section .text, "ax"
-.type _start, @function
+.type _start, %function
 _start:
     /* Clear frame pointer */
     mov fp, #0
