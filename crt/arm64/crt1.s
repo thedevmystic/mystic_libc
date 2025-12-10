@@ -1,26 +1,80 @@
 /**
- * MysticLibc - Standard C Library.
+ * Copyright 2025 Suryansh Singh
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * @file crt1.s (arm64)
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
- * @brief C Runtime Routine.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * ------------------------------------------------------------------------------------------------------
+ *
+ * @path [ROOT]/crt/arm64/crt1.s
+ * @file crt1.s
+ * @brief Entry point of C Runtime Routine.
+ *
+ * @details
+ * This header file contains entry point of C Runtime (CRT) Routine.
+ * i.e., It contains `_start` symbol. It initializes the stack pointer (SP),
+ * along with other crucial registers. It is fully PIC-compatible.
+ *
+ * This file calls `__start_c` which is defined in `[ROOT]/crt/crt1.c`.
+ * It does minimal setup and passes the control to the platform agnostic
+ * C function (i.e., `__start_c`). So, that we can call `__libc_start_main()`,
+ * without setting up the entire environment in other architectures.
+ *
+ * @sa [ROOT]/crt/arm64/crti.s - The initialization start of C Runtime
+ * @sa [ROOT]/crt/arm64/crtn.s - The initialization end of C Runtime
+ * @sa [ROOT]/crt/crtbegin.c - The initialization of constructors and destructor
+ *                             of C Runtime (GNU C feature, or C++ feature)
+ * @sa [ROOT]/crt/crtend.c   - The end of constructor and destructor lists of 
+ *                             C Runtime (GNU C feature, or C++ feature)
+ * @sa [ROOT]/crt/crt1.c     - The __start_c, and __libc_start_main functions.
+ *
+ * @author thedevmystic (Surya)
+ * @copyright 2025 Suryansh Singh Apache-2.0 License
+ *
+ * SPDX-FileCopyrightText: 2025 Suryansh Singh
+ * SPDX-License-Identifier: Apache-2.0
  */
 
-.global _start
+/**
+ * @brief Generate 64 bits instructions.
+ */
+.code64
 
+/**
+ * @brief Start function.
+ * This is the start symbol of any program.
+ */
+.global _start
 .section .text, "ax"
-.type _start, @function
+.type _start, %function
 _start:
-    mov x29, #0                      /* Clear frame pointer */
-    mov x30, #0                      /* Clear link register */
-    mov x0, sp                       /* Move stack pointer to a1 */
+    /* Clear frame pointer */
+    mov x29, #0
+    /* Clear link register */
+    mov x30, #0
+    /* Move stack pointer to a1 */
+    mov x0, sp
 
 .weak   _DYNAMIC
 .hidden _DYNAMIC
-    adrp x1, _DYNAMIC                 /* Load address page of _DYNAMIC */
-    add x1, x1, #:lo12:_DYNAMIC       /* Add the lower 12 bits of _DYNAMIC */
-    and sp, x0, #-16                  /* Align stack pointer and x0 */
-    b   _start_c                      /* Call main C function */
+    /* Load address page of _DYNAMIC */
+    adrp x1, _DYNAMIC
+    /* Add the lower 12 bits of _DYNAMIC */
+    add x1, x1, #:lo12:_DYNAMIC
+    /* Align stack pointer and x0 */
+    and sp, x0, #-16
+    /* Call main C function */
+    b   __start_c
     
     /* Should never reach here */
-    bl abort                        /* Branch-link to abort */
+    /* Branch-link to abort */
+    bl abort
+
