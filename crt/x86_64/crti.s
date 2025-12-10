@@ -48,7 +48,7 @@
  */
 .global _init
 .section .init, "ax"
-.type _init, @function
+.type _init, %function
 .align 16
 _init:
     /* Push RBP register */
@@ -61,7 +61,7 @@ _init:
  */
 .global _fini
 .section .fini, "ax"
-.type _fini, @function
+.type _fini, %function
 .align 16
 _fini:
     /* Push RBP register */

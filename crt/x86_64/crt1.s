@@ -54,7 +54,7 @@
  */
 .global _start
 .section .text, "ax"
-.type _start, @function
+.type _start, %function
 _start:
     /* Clears RBP register */
     xorq %rbp, %rbp
